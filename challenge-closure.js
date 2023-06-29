@@ -46,16 +46,5 @@ console.log(count.increment());
 console.log(count.decrement());
 console.log(count.decrement(2)); */
 
-/*
-2. Cache Function Results:
-Write a function called memoize that takes a function as an argument and returns a new function.
-The new function should cache the results of the original function based on its input arguments.
-If the same set of arguments is passed to the new function again, it should return the cached result instead of executing
-the original function.
-*/
 
-function memoize(callback) {
-  let results = callback();
 
-  return function () {};
-}

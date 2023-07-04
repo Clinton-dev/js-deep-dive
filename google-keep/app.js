@@ -12,6 +12,7 @@ class App {
     this.$formButtons = document.querySelector("#form-buttons");
     this.$notes = document.querySelector("#notes");
     this.$placeholderContainer = document.querySelector("#placeholder");
+    this.$formCloseButton = document.querySelector("#form-close-button");
 
     this.handleEventListeners();
   }
@@ -28,6 +29,11 @@ class App {
       const hasContent = Boolean(this.title) || Boolean(this.text);
       if (!hasContent) return;
       this.createNote({ title: this.title, text: this.text });
+    });
+
+    this.$formCloseButton.addEventListener("click", (event) => {
+      event.stopPropagation(); // Prevent bubbling
+      this.closeForm(event);
     });
   }
 
@@ -46,7 +52,7 @@ class App {
         this.createNote({ title: this.title, text: this.text });
       }
 
-      this.closeForm();
+      this.closeForm(event);
     }
   }
 
@@ -56,7 +62,8 @@ class App {
     this.$formButtons.style.display = "block";
   }
 
-  closeForm() {
+  closeForm(event) {
+    console.log(event.bubbles);
     this.$formContainer.classList.remove("form-open");
     this.$noteTitle.style.display = "none";
     this.$formButtons.style.display = "none";
@@ -101,7 +108,6 @@ class App {
     `
       )
       .join("");
-
   }
 }
 

@@ -11,6 +11,7 @@ class App {
     this.$noteText = document.querySelector("#note-text");
     this.$formButtons = document.querySelector("#form-buttons");
     this.$notes = document.querySelector("#notes");
+    this.$placeholderContainer = document.querySelector("#placeholder");
 
     this.handleEventListeners();
   }
@@ -79,6 +80,10 @@ class App {
   }
 
   displayNotes() {
+    // Hide placeholder div if there exists notes in our app
+    this.$placeholderContainer.style.display =
+      this.notes.length > 0 ? "none" : "block";
+
     this.$notes.innerHTML = this.notes
       .reverse()
       .map(
@@ -96,6 +101,7 @@ class App {
     `
       )
       .join("");
+
   }
 }
 

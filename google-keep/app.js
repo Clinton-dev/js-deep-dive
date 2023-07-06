@@ -13,6 +13,10 @@ class App {
     this.$notes = document.querySelector("#notes");
     this.$placeholderContainer = document.querySelector("#placeholder");
     this.$formCloseButton = document.querySelector("#form-close-button");
+    this.$modal = document.querySelector(".modal");
+    this.$modalTitle = document.querySelector(".modal-title");
+    this.$modalText = document.querySelector(".modal-text");
+    this.$closeModalButton = document.querySelector(".modal-close-button");
 
     this.handleEventListeners();
   }
@@ -20,6 +24,8 @@ class App {
   handleEventListeners() {
     document.body.addEventListener("click", (event) => {
       this.handleFormClick(event);
+      this.selectNote(event); // Helps get access to specific note
+      this.openModal(event);
     });
 
     this.$form.addEventListener("submit", (event) => {
@@ -34,6 +40,10 @@ class App {
     this.$formCloseButton.addEventListener("click", (event) => {
       event.stopPropagation(); // Prevent bubbling
       this.closeForm(event);
+    });
+
+    this.$closeModalButton.addEventListener("click", (event) => {
+      this.closeModal(event);
     });
   }
 
@@ -63,10 +73,24 @@ class App {
   }
 
   closeForm(event) {
-    console.log(event.bubbles);
     this.$formContainer.classList.remove("form-open");
     this.$noteTitle.style.display = "none";
     this.$formButtons.style.display = "none";
+  }
+
+  openModal(event) {
+    if (event.target.closest(".note")) {
+      this.$modal.classList.toggle("open-modal");
+      this.$modalTitle.value = this.title;
+      this.$modalText.value = this.text;
+    }
+  }
+
+  closeModal(event) {
+    // Edit note
+    this.editNote();
+    // remove open-modal class from note
+    console.log(event.target);
   }
 
   // TODO: Add note, display the notes in notes section, clear form
@@ -86,6 +110,32 @@ class App {
     this.displayNotes();
   }
 
+  editNote() {
+    const title = this.$modalTitle.value;
+    const text = this.$modalText.value;
+
+    // find post with respective id
+    this.notes = [...this.notes.map((note) => {
+      if(note.id == Number(this.id)) {
+        note.title = title
+        note.text = text
+      }
+      return note
+    })]
+
+    console.log(this.notes)
+  }
+
+  selectNote(event) {
+    const $selectedNote = event.target.closest(".note");
+    if (!$selectedNote) return;
+    const [$noteTitle, $noteText] = $selectedNote.children; // give me an array of title and text input
+    this.title = $noteTitle.innerText;
+    this.text = $noteText.innerText;
+
+    this.id = $selectedNote.dataset.id;
+  }
+
   displayNotes() {
     // Hide placeholder div if there exists notes in our app
     this.$placeholderContainer.style.display =
@@ -95,7 +145,9 @@ class App {
       .reverse()
       .map(
         (note) => `
-    <div style="background: ${note.backgroundColor};" class="note">
+    <div style="background: ${note.backgroundColor};" class="note" data-id="${
+          note.id
+        }">
           <div class="${note.title && "note-title"}">${note.title}</div>
           <div class="note-text">${note.text}</div>
           <div class="toolbar-container">

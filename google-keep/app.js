@@ -87,10 +87,8 @@ class App {
   }
 
   closeModal(event) {
-    // Edit note
-    this.editNote();
-    // remove open-modal class from note
-    console.log(event.target);
+    this.editNote(); // Edit note
+    this.$modal.classList.toggle("open-modal");
   }
 
   // TODO: Add note, display the notes in notes section, clear form
@@ -115,15 +113,17 @@ class App {
     const text = this.$modalText.value;
 
     // find post with respective id
-    this.notes = [...this.notes.map((note) => {
-      if(note.id == Number(this.id)) {
-        note.title = title
-        note.text = text
-      }
-      return note
-    })]
+    this.notes = [
+      ...this.notes.map((note) => {
+        if (note.id == Number(this.id)) {
+          note.title = title;
+          note.text = text;
+        }
+        return note;
+      }),
+    ];
 
-    console.log(this.notes)
+    this.displayNotes();
   }
 
   selectNote(event) {

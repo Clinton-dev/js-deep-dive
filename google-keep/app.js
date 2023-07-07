@@ -1,6 +1,6 @@
 class App {
   constructor() {
-    this.notes = [];
+    this.notes = JSON.parse(localStorage.getItem("notes")) || [];
     this.title = "";
     this.text = "";
     this.id = "";
@@ -19,6 +19,7 @@ class App {
     this.$closeModalButton = document.querySelector(".modal-close-button");
     this.$colorToolTip = document.querySelector("#color-tooltip");
 
+    this.render();
     this.handleEventListeners();
   }
 
@@ -148,7 +149,7 @@ class App {
     this.$noteTitle.value = "";
     this.$noteText.value = "";
 
-    this.displayNotes();
+    this.render();
   }
 
   editNote() {
@@ -166,7 +167,7 @@ class App {
       }),
     ];
 
-    this.displayNotes();
+    this.render();
   }
 
   editNotecolor(color) {
@@ -181,7 +182,7 @@ class App {
       }),
     ];
 
-    this.displayNotes();
+    this.render();
   }
 
   deleteNote(event) {
@@ -189,7 +190,16 @@ class App {
     if (!event.target.matches(".toolbar-delete")) return;
     const id = event.target.dataset.id;
     this.notes = this.notes.filter((note) => note.id != Number(id));
+    this.render();
+  }
+
+  render() {
+    this.saveNotes();
     this.displayNotes();
+  }
+
+  saveNotes() {
+    localStorage.setItem("notes", JSON.stringify(this.notes));
   }
 
   selectNote(event) {

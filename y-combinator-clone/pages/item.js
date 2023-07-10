@@ -1,5 +1,5 @@
 import view from "../utils/view.js";
-import Story from "../component/Story.js";
+import Story from "../components/Story.js";
 
 export default async function Item() {
   const story = await getStory();

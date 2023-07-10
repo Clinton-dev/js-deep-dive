@@ -9,7 +9,6 @@ export default function Story({
   id,
   comments_count,
 }) {
-  console.log(story);
   return `<div class="story">
   <div>
     <span class="gray">${index || ""}</span>

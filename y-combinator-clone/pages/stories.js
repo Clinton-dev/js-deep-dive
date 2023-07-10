@@ -9,7 +9,7 @@ export default async function Stories(path) {
 
   View.innerHTML = `<div>
     ${
-      !hasStories
+      hasStories
         ? stories
             .map((story, index) => Story({ ...story, index: index + 1 }))
             .join("")

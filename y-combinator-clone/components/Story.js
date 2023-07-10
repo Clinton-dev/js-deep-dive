@@ -9,10 +9,10 @@ export default function Story({
   id,
   comments_count,
 }) {
-  //   console.log(story)
+  console.log(story);
   return `<div class="story">
   <div>
-    <span class="gray">${index}</span>
+    <span class="gray">${index || ""}</span>
     <span class="upvote">▲</span>
     <a href="${url}">${title}</a>
     <span>(${domain})</span>

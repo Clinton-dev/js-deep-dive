@@ -289,3 +289,9 @@ textarea {
 .error {
   color: red;
 }
+
+
+.center-container {
+    display: flex;
+    align-items: center;
+}

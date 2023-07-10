@@ -9,11 +9,11 @@ export default async function Stories(path) {
 
   View.innerHTML = `<div>
     ${
-      hasStories
+      !hasStories
         ? stories
             .map((story, index) => Story({ ...story, index: index + 1 }))
             .join("")
-        : "No stories found, try later!!!"
+        : "<div class='center-container'><img src='../images/notfound_thumbs_broken_404_icon.png'/> <h4 class='error'>No stories found, try later!!!</h4></div>"
     }
   </div>`;
 }

@@ -1,5 +1,6 @@
 import View from "../utils/view.js";
 import Story from "../components/Story.js";
+import baseUrl from "../utils/baseUrl.js";
 
 // For pages start with small case while for components start with Capital case
 
@@ -27,7 +28,6 @@ async function getStories(path) {
     path = "/newest";
   }
 
-  const baseUrl = "https://node-hnapi.herokuapp.com";
   const fullUrl = baseUrl + path;
 
   const response = await fetch(fullUrl);
